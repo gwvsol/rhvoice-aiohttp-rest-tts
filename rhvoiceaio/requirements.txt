@@ -1,0 +1,13 @@
+aiohttp==3.8.1
+aiosignal==1.2.0
+async-timeout==4.0.2
+attrs==21.4.0
+charset-normalizer==2.0.12
+frozenlist==1.3.0
+gunicorn==20.1.0
+idna==3.3
+multidict==6.0.2
+rhvoice-wrapper==0.7.1
+rhvoice-wrapper-bin==0.4.0
+rhvoice-wrapper-data==0.4.1
+yarl==1.7.2
