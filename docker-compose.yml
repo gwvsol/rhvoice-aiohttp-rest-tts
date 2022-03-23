@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+
+  rhvoiceaio:
+    build: 
+      context: .
+      dockerfile: ${DOCKERFILE_STT_TTS}
+      args:
+        TIMEZONE: ${TIMEZONE}
+    container_name: ${RHVOICEAIO}
+    image: ${RHVOICEAIO}:${RELEASE_IMAGE}
+    ports:
+      - ${RHVOICEAIO_PORT}:2700
+    restart: unless-stopped
+    logging:
+      driver: journald
+    networks:
+      - stt-tts-net
+
+networks:
+  stt-tts-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: ${RHVOICEAIO_NET}
