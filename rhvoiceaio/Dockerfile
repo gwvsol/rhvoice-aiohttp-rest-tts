@@ -48,7 +48,7 @@ RUN apt-get install -y build-essential git make unzip tzdata curl \
        libspeechd-dev lame opus-tools flac \
     && apt-get install -y python3 python3-dev python3-pip \
        python3-venv python3-setuptools python3-wheel \
-    && pip3 install setuptools wheel \
+    && pip3 install scons lxml setuptools wheel \
     && apt-get clean \
     && rm -rf /root/.cache/pip
 
