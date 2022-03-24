@@ -94,7 +94,6 @@ endif
 .PHONY: build
 build: ${DOCKER} ${COMPOSE} ${COMPOSE_FILE} 
 	@make release
-	@make build-basic
 	@${COMPOSE} -f ${COMPOSE_FILE} build
 
 # Старт RHVOICEAIO
