@@ -9,7 +9,8 @@ from rhvoiceaio.config.conf import RHVOICEAIO_HOST, \
                                    TTS_DEFAULT_VOICE, \
                                    TTS_FORMATS, \
                                    TTS_DEFAULT_FORMAT, \
-                                   TTS_ADD_FORMATS
+                                   TTS_ADD_FORMATS, \
+                                   START_TIME
 
 
 __all__ = (
@@ -24,5 +25,6 @@ __all__ = (
     'TTS_DEFAULT_VOICE',
     'TTS_FORMATS',
     'TTS_DEFAULT_FORMAT',
-    'TTS_ADD_FORMATS'
+    'TTS_ADD_FORMATS',
+    'START_TIME',
 )
