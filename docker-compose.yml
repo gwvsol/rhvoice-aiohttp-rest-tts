@@ -16,7 +16,7 @@ services:
     logging:
       driver: journald
     networks:
-      - rhvoiceaios-net
+      - rhvoiceaio-net
 
 networks:
   rhvoiceaio-net:
