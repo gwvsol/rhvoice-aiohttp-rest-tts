@@ -82,16 +82,16 @@ async def say_handle(request):
 
 
 async def format_handle(request):
-    """ Получение данных о поддерживаемых фотматах 
+    """ Получение данных о поддерживаемых фотматах
         curl -s "http://192.168.62.148:8040/formats" | jq '.' """
     formats_ = await _get_format(request, list_=True)
     return web.json_response({'formats': formats_})
 
 
 async def voices_handle(request):
-    """ Получение данных о поддерживаемых голосах 
+    """ Получение данных о поддерживаемых голосах
         curl -s "http://192.168.62.148:8040/voices" | jq '.' """
-    voices_ = await _get_voice(request, list_= True)
+    voices_ = await _get_voice(request, list_=True)
     return web.json_response({'voices_info': voices_})
 
 
@@ -131,5 +131,5 @@ def rhvoiceaio():
                     web.get('/formats', format_handle)])
     app.on_startup.append(start_tts)
     app.on_shutdown.append(stop_tts)
-    log.info(f"Start RHVOICEAIO")
+    log.info("Start RHVOICEAIO")
     return app
