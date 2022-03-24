@@ -3,5 +3,4 @@ venv
 .vscode
 .eggs
 *.egg-info
-release
 __pycache__
