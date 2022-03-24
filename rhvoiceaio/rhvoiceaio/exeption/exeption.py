@@ -10,6 +10,6 @@ class ConfigError(RhvoiceAioError):
     pass
 
 
-class TTSError(RhvoiceAioError):
-    """ Обработка исключений TTSService """
-    pass
+# class TTSError(RhvoiceAioError):
+#     """ Обработка исключений TTSService """
+#     pass
