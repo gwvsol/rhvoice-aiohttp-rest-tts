@@ -1,4 +1,5 @@
 from os import getenv as env
+from datetime import datetime
 
 from rhvoiceaio.exeption import ConfigError
 # from rhvoiceaio.log import logging as log
@@ -44,3 +45,8 @@ TTS_FORMATS = {'wav': 'audio/wav',
 TTS_ADD_FORMATS = ['alaw', 'ulaw']
 #
 # =====================================================
+#
+START_TIME = round(datetime.now().timestamp())
+#
+# =====================================================
+#
