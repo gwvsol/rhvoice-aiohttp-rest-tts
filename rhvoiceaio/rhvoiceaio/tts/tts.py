@@ -1,9 +1,7 @@
-from aiohttp import web
 import wave
-from wave import Error
 import audioop
+from wave import Error
 from io import BytesIO
-
 from rhvoice_wrapper import TTS as RHTTS
 
 from rhvoiceaio.log import logging as log
@@ -18,7 +16,6 @@ class TTS(object):
         self.format = conf.TTS_DEFAULT_FORMAT
         self.log = log
 
-
     def voice_streamer(self, text: str, format: str, voice: str):
         """ Преобразование текста в звук """
         format_ = 'wav' if format in conf.TTS_ADD_FORMATS else format
@@ -29,7 +26,6 @@ class TTS(object):
             sound = self.to_alaw(sound, format)
         log.info(f'{format} => {len(sound)} bytes')
         return sound
-
 
     def to_alaw(self, wav: bytes, format: str) -> bytes:
         """ Конвертация wav в alaw или ulaw """
