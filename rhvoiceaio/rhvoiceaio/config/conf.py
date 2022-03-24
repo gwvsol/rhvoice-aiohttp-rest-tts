@@ -17,10 +17,6 @@ if RHVOICEAIO_PORT.isdigit():
 else:
     raise ConfigError('RHVOICEAIO_PORT ERROR in env')
 #
-RHVOICEAIO_URL = env('RHVOICEAIO_URL', default=None)
-if RHVOICEAIO_URL is None:
-    raise ConfigError('RHVOICEAIO_URL ERROR in env')
-#
 RHVOICEAIO_WORKER = 1
 RHVOICEAIO_WORKER_CLASS = 'aiohttp.GunicornWebWorker'
 RHVOICEAIO_KEEPALIVE = 2
@@ -37,5 +33,14 @@ if TTS_DEFAULT_VOICE is None:
 TTS_DEFAULT_FORMAT = env('TTS_DEFAULT_FORMAT', default=None)
 if TTS_DEFAULT_FORMAT is None:
     raise ConfigError('TTS_DEFAULT_FORMAT ERROR in env')
+#
+TTS_FORMATS = {'wav': 'audio/wav',
+               'mp3': 'audio/mpeg',
+               'opus': 'audio/ogg',
+               'flac': 'audio/flac',
+               'alaw': 'audio/x-alaw-basic',
+               'ulaw': 'audio/basic'}
+#
+TTS_ADD_FORMATS = ['alaw', 'ulaw']
 #
 # =====================================================
