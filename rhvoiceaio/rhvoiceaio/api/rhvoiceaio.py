@@ -1,15 +1,41 @@
 import asyncio
 from aiohttp import web
+from shlex import quote
+from urllib import parse
+from datetime import datetime, timezone
 from aiohttp.web_exceptions import HTTPBadRequest
 from aiohttp.http_exceptions import BadHttpMessage
-from urllib import parse
-from shlex import quote
 
 from rhvoiceaio.config import TTS_FORMATS, \
                               TTS_DEFAULT_VOICE, \
-                              TTS_DEFAULT_FORMAT
-from rhvoiceaio.log import logging as log
+                              TTS_DEFAULT_FORMAT, \
+                              START_TIME
 from rhvoiceaio.tts import TTS
+from rhvoiceaio.log import logging as log
+
+
+async def _get_datetime(start: int = 0) -> dict:
+    """ Получение текущего времени """
+    now = round(datetime.now().timestamp())
+    uptime = now - start
+    date = datetime.fromtimestamp(uptime, tz=timezone.utc)
+    return uptime, date
+
+
+async def _datetime_to_str(date: datetime) -> str:
+    """ Преобразование времени в строку """
+    tz = date.strftime('%z')
+    tz = f'{tz[:3]}:{tz[3:]}'
+    return f"{date.strftime('%y-%m-%dT%H:%M:%S')}{tz}"
+
+
+async def _get_info() -> dict:
+    """ Получение времени работы сервиса """
+    _, date = await _get_datetime()
+    date = await _datetime_to_str(date)
+    uptime, uptime_date = await _get_datetime(START_TIME)
+    uptime_date = await _datetime_to_str(uptime_date.replace(year=2000))
+    return dict(uptime=uptime, uptime_str=uptime_date, datetime=date)
 
 
 async def _get_text(request) -> str:
@@ -99,6 +125,13 @@ async def voices_handle(request):
     return web.json_response({'voices_info': voices_})
 
 
+@asyncio.coroutine
+async def info_handle(request):
+    """ Проверка работы сервиса
+        curl -s "http://192.168.62.148:8040" | jq '.' """
+    return web.json_response(await _get_info())
+
+
 @web.middleware
 async def error_middleware(request, handler):
     """ Обработка 400 и 404 """
@@ -130,7 +163,8 @@ def rhvoiceaio():
     """ Запуск RHVOICEAIO """
     app = web.Application()
     app = web.Application(middlewares=[error_middleware])
-    app.add_routes([web.get('/say', say_handle),
+    app.add_routes([web.get('/', info_handle),
+                    web.get('/say', say_handle),
                     web.get('/voices', voices_handle),
                     web.get('/formats', format_handle)])
     app.on_startup.append(start_tts)
