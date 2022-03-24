@@ -1,6 +1,5 @@
 from rhvoiceaio.config.conf import RHVOICEAIO_HOST, \
                                    RHVOICEAIO_PORT, \
-                                   RHVOICEAIO_URL, \
                                    RHVOICEAIO_LOG, \
                                    RHVOICEAIO_LOG_FORMAT, \
                                    RHVOICEAIO_TIMEOUT, \
@@ -8,13 +7,14 @@ from rhvoiceaio.config.conf import RHVOICEAIO_HOST, \
                                    RHVOICEAIO_WORKER, \
                                    RHVOICEAIO_WORKER_CLASS, \
                                    TTS_DEFAULT_VOICE, \
-                                   TTS_DEFAULT_FORMAT
+                                   TTS_FORMATS, \
+                                   TTS_DEFAULT_FORMAT, \
+                                   TTS_ADD_FORMATS
 
 
 __all__ = (
     'RHVOICEAIO_HOST',
     'RHVOICEAIO_PORT',
-    'RHVOICEAIO_URL',
     'RHVOICEAIO_LOG',
     'RHVOICEAIO_LOG_FORMAT',
     'RHVOICEAIO_TIMEOUT',
@@ -22,5 +22,7 @@ __all__ = (
     'RHVOICEAIO_WORKER',
     'RHVOICEAIO_WORKER_CLASS',
     'TTS_DEFAULT_VOICE',
+    'TTS_FORMATS',
     'TTS_DEFAULT_FORMAT',
+    'TTS_ADD_FORMATS'
 )
