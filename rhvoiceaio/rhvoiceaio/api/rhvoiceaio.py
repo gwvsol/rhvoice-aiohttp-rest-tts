@@ -1,3 +1,4 @@
+import asyncio
 from aiohttp import web
 from aiohttp.web_exceptions import HTTPBadRequest
 from aiohttp.http_exceptions import BadHttpMessage
@@ -57,9 +58,10 @@ async def _get_voice(request, list_: bool = False) -> str:
         raise HTTPBadRequest(reason=err)
 
 
+@asyncio.coroutine
 async def say_handle(request):
     """ Обработчик перевода текста в речь
-        http://192.168.62.148:8040/say?text=привет&format=wav&voice=arina """
+        http://192.168.62.148:8040/say?text=привет&format=mp3&voice=arina """
     try:
         text = await _get_text(request)
         voice = await _get_voice(request)
@@ -81,6 +83,7 @@ async def say_handle(request):
         raise HTTPBadRequest(err)
 
 
+@asyncio.coroutine
 async def format_handle(request):
     """ Получение данных о поддерживаемых фотматах
         curl -s "http://192.168.62.148:8040/formats" | jq '.' """
@@ -88,6 +91,7 @@ async def format_handle(request):
     return web.json_response({'formats': formats_})
 
 
+@asyncio.coroutine
 async def voices_handle(request):
     """ Получение данных о поддерживаемых голосах
         curl -s "http://192.168.62.148:8040/voices" | jq '.' """
