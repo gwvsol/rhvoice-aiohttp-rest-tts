@@ -13,6 +13,8 @@ services:
     ports:
       - ${RHVOICEAIO_PORT}:8040
     restart: unless-stopped
+    volumes:
+      - ${ENVFILE}:/usr/src/.env
     logging:
       driver: journald
     networks:
