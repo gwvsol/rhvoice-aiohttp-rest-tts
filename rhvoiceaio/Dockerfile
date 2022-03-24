@@ -22,7 +22,7 @@ ENV PYTHONUNBUFFERED 1
 ENV SHELL=/bin/bash
 
 # Имя релиза приложения
-ENV APPS=ussmppbx
+ENV APPS=rhvoiceaio
 
 # Директория для запуска сервиса
 ENV APP_DIR=/usr/src
@@ -45,10 +45,10 @@ ENV LC_ALL ru_RU.UTF-8
 
 # Устанавливаем необходимые пакеты и зависимости
 RUN apt-get install -y build-essential git make unzip tzdata curl \
+       libspeechd-dev lame opus-tools flac \
     && apt-get install -y python3 python3-dev python3-pip \
        python3-venv python3-setuptools python3-wheel \
-       libspeechd-dev lame opus-tools flac \
-    && pip3 install scons lxml setuptools wheel \
+    && pip3 install setuptools wheel \
     && apt-get clean \
     && rm -rf /root/.cache/pip
 
@@ -62,8 +62,6 @@ RUN set -eux \
     && cd ${APP_DIR} \
     && unzip ${APPS}-*.zip \
     && rm *.zip \
-    && mv *.crt /usr/local/share/ca-certificates/ \
-    && update-ca-certificates \
     && chown -Rf $APPS:$APPS $APP_DIR
 
 # Переключаем на не привилигированного пользователя
@@ -72,7 +70,7 @@ USER $APPS
 WORKDIR $APP_DIR
 
 # Запускаем установку приложения
-RUN make install-ussmppbx \
+RUN make install-rhvoiceaio \
     && rm -fr .env \
     && rm -rf $HOME/.cache/pip
 
@@ -81,10 +79,10 @@ HEALTHCHECK --interval=180s \
             --timeout=1s \
             --retries=3 \
             --start-period=10s \
-            CMD curl --fail -X GET http://localhost:8080/ping || kill 1
+            CMD curl --fail -X GET http://localhost:8040 || kill 1
 
 # Открываем порты
-EXPOSE 8080
+EXPOSE 8040
 
 # Что стартуем при запуске Docker
-ENTRYPOINT ["make", "run-ussmppbx"]
+ENTRYPOINT ["make", "run-rhvoiceaio"]
