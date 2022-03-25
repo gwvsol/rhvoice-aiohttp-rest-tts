@@ -65,3 +65,25 @@ log-rhvoiceaio: ${DOCKER} ${COMPOSE} ${COMPOSE_FILE} ${DOCKERFILE_RHVOICEAIO}
 #		${COMPOSE} -f ${COMPOSE_FILE} logs --follow --tail 500 ${RHVOICEAIO}
 
 #=============================================
+
+# поддерживаемые голоса и языки
+.PHONY: voices
+voices:
+	@curl -s "http://${LOCALHOST}:${ROBOTISK_PORT}/voices" | jq '.'
+
+# поддеоживаемые звуковые форматы
+.PHONY: formats
+formats:
+	@curl -s "http://${LOCALHOST}:${ROBOTISK_PORT}/formats" | jq '.'
+
+# проверка воспроизведения звука через браузер
+.PHONY: play
+play:
+	@(xdg-open "http://${LOCALHOST}:${ROBOTISK_PORT}/say?text=привет братишка&format=mp3&voice=arina" &)
+
+# получение информации о работе сервиса
+.PHONY: info
+info:
+	@curl -s "http://${LOCALHOST}:${ROBOTISK_PORT}" | jq '.'
+
+#=============================================
